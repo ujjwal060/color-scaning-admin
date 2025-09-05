@@ -9,6 +9,9 @@ import {
   VideoCameraOutlined,
   LogoutOutlined,
   ExclamationCircleOutlined,
+  DollarCircleFilled,
+  DollarOutlined,
+  AreaChartOutlined
 } from "@ant-design/icons";
 const { Header, Content, Footer, Sider } = Layout;
 const { confirm } = Modal;
@@ -53,7 +56,7 @@ const DashboardLayout = () => {
   const items = [
     {
       key: "1",
-      icon: <UserOutlined />,
+      icon: <AreaChartOutlined />,
       label: "Dashboard",
       path: "/",
     },
@@ -65,13 +68,13 @@ const DashboardLayout = () => {
     },
     {
       key: "3",
-      icon: <VideoCameraOutlined />,
+      icon: <DollarOutlined />,
       label: "Payment",
       path: "/payment",
     },
     {
       key: "4",
-      icon: <UploadOutlined />,
+      icon: <DollarCircleFilled />,
       label: "Subscription",
       path: "/subscription",
     },
