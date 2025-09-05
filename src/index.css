@@ -3,10 +3,9 @@
   width: 100%;
 }
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
+  font-family: "Roboto", sans-serif;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
@@ -17,56 +16,41 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+.table-custom {
+  max-height: calc(100vh - 35vh);
+  overflow: auto;
 }
-a:hover {
-  color: #535bf2;
+.table-custom::-webkit-scrollbar {
+  width: 10px;
+  background-color: #f5f5f5;
 }
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+.table-custom::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
+  border-radius: 10px;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.table-custom::-webkit-scrollbar-thumb {
+  background-color: #000000;
+  border: 2px solid #555555;
+  border-radius: 10px;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset !important;
+  -webkit-text-fill-color: #000 !important; /* Optional: change text color */
+  transition: background-color 5000s ease-in-out 0s; /* Prevents immediate color change */
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.bg-gradient-custom {
+  background: #5757f7;
+  background: radial-gradient(
+    circle,
+    rgba(87, 87, 247, 1) 0%,
+    rgba(73, 207, 174, 1) 49%,
+    rgba(220, 163, 255, 1) 100%
+  );
 }
