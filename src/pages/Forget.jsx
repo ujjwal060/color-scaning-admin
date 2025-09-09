@@ -14,7 +14,6 @@ export default function ForgotPassword() {
         navigate("/verify-otp?email=" + values.email);
       }
     } catch (error) {
-      console.log(error);
       notify("error", error);
     }
   };

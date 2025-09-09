@@ -1,4 +1,5 @@
 import axiosInstance from "../components/axiosInstance";
+import { notify } from "../components/notification";
 
 export const loginApi = async (email, password) => {
   try {
@@ -13,8 +14,8 @@ export const loginApi = async (email, password) => {
       return response?.data;
     }
   } catch (error) {
-    console.log("call api 3");
-    console.log(error);
+    console.log(error?.response?.data?.message);
+    notify("error", error?.response?.data?.message);
   }
 };
 
@@ -27,7 +28,8 @@ export const forgotApi = async (email) => {
       return response?.data;
     }
   } catch (error) {
-    console.log(error);
+    console.log("error api" , error?.response?.data?.message);
+    notify("error", error?.response?.data?.message);
   }
 };
 
@@ -42,6 +44,7 @@ export const verifyOtpApi = async (email, otp) => {
     }
   } catch (error) {
     console.log("error otp" ,error?.response?.data?.message);
+    notify("error", error?.response?.data?.message);
   }
 };
 
@@ -58,6 +61,7 @@ export const resetPasswordApi = async (token, password) => {
       return response?.data;
     }
   } catch (error) {
-    console.log(error);
+    console.log(error?.response?.data?.message);
+    notify("error", error?.response?.data?.message);
   }
 };
