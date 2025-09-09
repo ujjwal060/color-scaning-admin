@@ -10,7 +10,7 @@ import VerifyOtp from "../pages/VerifyOtp";
 import ResetPassword from "../pages/ResetPassword";
 import ChangePassword from "../pages/ChangePassword";
 import { useEffect } from "react";
-
+import { Button, Result } from "antd";
 const ProtectedRoute = ({ children }) => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token"); // or your specific token key
@@ -30,6 +30,22 @@ const ProtectedRoute = ({ children }) => {
 };
 
 export const router = createBrowserRouter([
+  {
+    path: "*",
+    element: (
+      <Result
+        status="404"
+        title="404"
+        subTitle="Sorry, the page you visited does not exist."
+        extra={
+          <Button type="primary" onClick={() => (window.location.href = "/")}>
+            Back Home
+          </Button>
+        }
+        style={{ height: "100vh", background: "#fff" }}
+      />
+    ),
+  },
   {
     path: "/login",
     element: <Login />,
