@@ -30,7 +30,7 @@ const DashboardLayout = () => {
   const handleLogoutOk = () => {
     // Perform logout actions here (clear tokens, etc.)
     localStorage.removeItem("authToken"); // Example: remove token from storage
-    sessionStorage.removeItem("userData"); // Example: remove user data
+    sessionStorage.removeItem("userId"); // Example: remove user data
 
     // Then navigate to login page
     navigate("/login");
