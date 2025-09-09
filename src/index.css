@@ -1,11 +1,14 @@
 @import "tailwindcss";
+* {
+  font-family: "Roboto", sans-serif;
+}
 #root {
   width: 100%;
 }
 :root {
   line-height: 1.5;
   font-weight: 400;
-  font-family: "Roboto", sans-serif;
+
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
@@ -50,6 +53,22 @@ input:-webkit-autofill:active {
 :where(.css-kbg4zp).ant-menu-light > .ant-menu .ant-menu-item-selected {
   background-color: #fff !important;
   color: #000 !important;
+}
+:where(.css-kbg4zp).ant-menu-light.ant-menu-root.ant-menu-inline,
+:where(.css-kbg4zp).ant-menu-light > .ant-menu.ant-menu-root.ant-menu-inline,
+:where(.css-kbg4zp).ant-menu-light.ant-menu-root.ant-menu-vertical,
+:where(.css-kbg4zp).ant-menu-light > .ant-menu.ant-menu-root.ant-menu-vertical,
+:where(
+    .css-dev-only-do-not-override-kbg4zp
+  ).ant-menu-light.ant-menu-root.ant-menu-inline,
+:where(.css-dev-only-do-not-override-kbg4zp).ant-menu-light
+  > .ant-menu.ant-menu-root.ant-menu-inline,
+:where(
+    .css-dev-only-do-not-override-kbg4zp
+  ).ant-menu-light.ant-menu-root.ant-menu-vertical,
+:where(.css-dev-only-do-not-override-kbg4zp).ant-menu-light
+  > .ant-menu.ant-menu-root.ant-menu-vertical {
+  border-inline-end: 0px !important;
 }
 .bg-gradient-custom {
   background: #5757f7;
