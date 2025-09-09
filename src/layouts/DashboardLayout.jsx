@@ -11,7 +11,7 @@ import {
   ExclamationCircleOutlined,
   DollarCircleFilled,
   DollarOutlined,
-  AreaChartOutlined
+  AreaChartOutlined,
 } from "@ant-design/icons";
 const { Header, Content, Footer, Sider } = Layout;
 const { confirm } = Modal;
@@ -104,6 +104,19 @@ const DashboardLayout = () => {
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
+        style={{
+          overflow: "auto",
+          height: "100vh",
+          position: "sticky",
+          insetInlineStart: 0,
+          top: 0,
+          bottom: 0,
+          scrollbarWidth: "thin",
+          scrollbarGutter: "stable",
+          // background: "#5757F7",
+          background:
+            "linear-gradient(137deg, rgba(87, 87, 247, 1) 0%, rgba(73, 207, 174, 1) 49%, rgba(220, 163, 255, 1) 100%)",
+        }}
       >
         <div className="demo-logo-vertical" />
         <div
@@ -123,7 +136,7 @@ const DashboardLayout = () => {
         </div>
 
         <Menu
-          theme="dark"
+          // theme="dark"
           mode="inline"
           selectedKeys={[selectedMenu]}
           items={items.map((item) => ({
@@ -131,13 +144,17 @@ const DashboardLayout = () => {
             icon: item.icon,
             label: item.label,
           }))}
+          style={{ background: "inherit" }}
           onClick={handleMenuClick}
         />
       </Sider>
       <Layout>
         <Header
           className="flex justify-between items-center"
-          style={{ padding: "0px 20px", background: "#fff" }}
+          style={{
+            padding: "0px 20px",
+            background: "#fff",
+          }}
         >
           <div onClick={() => setCollapsed(!collapsed)}>
             {collapsed ? (
@@ -171,12 +188,10 @@ const DashboardLayout = () => {
         >
           <Outlet />
         </Content>
-        <Footer style={{ textAlign: "center" }}>
+        {/* <Footer style={{ textAlign: "center" }}>
           Color Scanning App ©{new Date().getFullYear()}
-        </Footer>
+        </Footer> */}
       </Layout>
-
-      {/* Logout Confirmation Modal */}
       <Modal
         title="Confirm Logout"
         open={isLogoutModalOpen}

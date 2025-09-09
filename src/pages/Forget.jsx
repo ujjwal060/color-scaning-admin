@@ -1,9 +1,22 @@
 import { Form, Input, Button } from "antd";
 import AuthLayout from "../components/AuthLayout";
+import { forgotApi } from "../api/auth";
+import { useNavigate } from "react-router-dom";
+import { notify } from "../components/notification";
 
 export default function ForgotPassword() {
-  const onFinish = (values) => {
-    console.log("Forgot Password:", values);
+  const navigate = useNavigate();
+  const onFinish = async (values) => {
+    try {
+      const response = await forgotApi(values.email);
+      if (response?.status === 200) {
+        notify("success", "OTP sent successfully!");
+        navigate("/verify-otp?email=" + values.email);
+      }
+    } catch (error) {
+      console.log(error);
+      notify("error", error);
+    }
   };
 
   return (

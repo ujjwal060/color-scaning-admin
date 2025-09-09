@@ -1,9 +1,22 @@
 import { Form, Input, Button } from "antd";
 import AuthLayout from "../components/AuthLayout";
+import { resetPasswordApi } from "../api/auth";
+import { useNavigate } from "react-router-dom";
+import { notify } from "../components/notification";
 
 export default function ResetPassword() {
-  const onFinish = (values) => {
-    console.log("Reset Password:", values);
+  const navigate = useNavigate()
+  const token = new URLSearchParams(window.location.search).get("token");
+  const onFinish = async(values) => {
+    try {
+      const response = await resetPasswordApi(token, values.password);
+      if (response?.status === 200) {
+        notify("success", "Password reset successfully!");
+        navigate("/login");
+      }
+    } catch (error) {
+      notify("error", error);
+    }
   };
 
   return (

@@ -1,14 +1,33 @@
-import { createBrowserRouter } from 'react-router-dom';
-import DashboardLayout from '../layouts/DashboardLayout';
-import Dashboard from '../pages/Dashboard';
-import Users from '../pages/Users';
-import Payment from '../pages/Payment';
-import Subscription from '../pages/Subscription';
+import { createBrowserRouter, useNavigate } from "react-router-dom";
+import DashboardLayout from "../layouts/DashboardLayout";
+import Dashboard from "../pages/Dashboard";
+import Users from "../pages/Users";
+import Payment from "../pages/Payment";
+import Subscription from "../pages/Subscription";
 import Login from "../pages/Login";
 import ForgotPassword from "../pages/Forget";
 import VerifyOtp from "../pages/VerifyOtp";
 import ResetPassword from "../pages/ResetPassword";
 import ChangePassword from "../pages/ChangePassword";
+import { useEffect } from "react";
+
+const ProtectedRoute = ({ children }) => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token"); // or your specific token key
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login", { replace: true });
+    }
+  }, [token, navigate]);
+
+  // Optional: Show loading state while checking authentication
+  if (!token) {
+    return <div>Loading...</div>; // or a proper loading component
+  }
+
+  return children;
+};
 
 export const router = createBrowserRouter([
   {
@@ -32,22 +51,27 @@ export const router = createBrowserRouter([
     element: <ChangePassword />,
   },
   {
-    element: <DashboardLayout />,
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+
     children: [
       {
-        path: '/',
+        path: "/",
         element: <Dashboard />,
       },
       {
-        path: '/users',
+        path: "/users",
         element: <Users />,
       },
       {
-        path: '/payment',
+        path: "/payment",
         element: <Payment />,
       },
       {
-        path: '/subscription',
+        path: "/subscription",
         element: <Subscription />,
       },
 
