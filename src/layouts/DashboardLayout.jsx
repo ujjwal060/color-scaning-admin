@@ -13,6 +13,8 @@ import {
   DollarOutlined,
   AreaChartOutlined,
 } from "@ant-design/icons";
+import logo from "../assets/logo.png";
+import logo1 from "../assets/logo1.png";
 const { Header, Content, Footer, Sider } = Layout;
 const { confirm } = Modal;
 
@@ -118,23 +120,9 @@ const DashboardLayout = () => {
             "linear-gradient(137deg, rgba(87, 87, 247, 1) 0%, rgba(73, 207, 174, 1) 49%, rgba(220, 163, 255, 1) 100%)",
         }}
       >
-        <div className="demo-logo-vertical" />
-        <div
-          style={{
-            height: 32,
-            margin: 16,
-            background: "rgba(255, 255, 255, 0.2)",
-            borderRadius: 6,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "white",
-            fontWeight: "bold",
-          }}
-        >
-          {collapsed ? "App" : "Application"}
+        <div className="demo-logo-vertical w-full">
+          <img src={logo1} alt="logo" className="w-full" style={{maxHeight: "120px" , objectFit:"contain"}} />
         </div>
-
         <Menu
           // theme="dark"
           mode="inline"
@@ -144,7 +132,7 @@ const DashboardLayout = () => {
             icon: item.icon,
             label: item.label,
           }))}
-          style={{ background: "inherit" }}
+          style={{ background: "inherit" , marginTop: "20px"}}
           onClick={handleMenuClick}
         />
       </Sider>
