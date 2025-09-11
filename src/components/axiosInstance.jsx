@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://34.206.193.218:7878/api/admin",
+  baseURL: "http://34.206.193.218:7878/api/",
 });
 
 let isRefreshing = false;
@@ -22,8 +22,8 @@ const processQueue = (error, token = null) => {
 axiosInstance.interceptors.request.use(
   (config) => {
     const token =
-      localStorage.getItem("hunterToken") ||
-      localStorage.getItem("ProviderToken");
+      localStorage.getItem("token") ||
+      localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

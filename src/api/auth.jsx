@@ -3,7 +3,7 @@ import { notify } from "../components/notification";
 
 export const loginApi = async (email, password) => {
   try {
-    const response = await axiosInstance.post("/login", {
+    const response = await axiosInstance.post("admin/login", {
       email: email,
       password: password,
     });
@@ -21,7 +21,7 @@ export const loginApi = async (email, password) => {
 
 export const forgotApi = async (email) => {
   try {
-    const response = await axiosInstance.post("/forgot-password", {
+    const response = await axiosInstance.post("admin/forgot-password", {
       email: email,
     });
     if (response?.data?.status === 200) {
@@ -35,7 +35,7 @@ export const forgotApi = async (email) => {
 
 export const verifyOtpApi = async (email, otp) => {
   try {
-    const response = await axiosInstance.post("/verify-otp", {
+    const response = await axiosInstance.post("admin/verify-otp", {
       email: email,
       otp: otp,
     });
@@ -50,7 +50,7 @@ export const verifyOtpApi = async (email, otp) => {
 
 export const resetPasswordApi = async (token, password) => {
   try {
-    const response = await axiosInstance.post("/set-password", {
+    const response = await axiosInstance.post("admin/set-password", {
       newPassword: password,
     } , {
       headers: {
