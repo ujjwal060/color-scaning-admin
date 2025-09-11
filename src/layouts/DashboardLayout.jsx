@@ -120,7 +120,7 @@ const DashboardLayout = () => {
             "linear-gradient(137deg, rgba(87, 87, 247, 1) 0%, rgba(73, 207, 174, 1) 49%, rgba(220, 163, 255, 1) 100%)",
         }}
       >
-        <div className="demo-logo-vertical w-full">
+        <div className="demo-logo-vertical w-full mt-3">
           <img src={logo1} alt="logo" className="w-full" style={{maxHeight: "120px" , objectFit:"contain"}} />
         </div>
         <Menu
