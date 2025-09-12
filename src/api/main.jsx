@@ -70,7 +70,7 @@ export const createSubscription = async (
 
 export const getSubscription = async () => {
   try {
-    const response = await axiosInstance.get("plan", {
+    const response = await axiosInstance.get("plan/all", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

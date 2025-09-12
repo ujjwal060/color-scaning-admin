@@ -306,7 +306,7 @@ const Subscription = () => {
       render: (status , record) => (
         <Switch
           checked={status}
-          // onChange={(checked) => handleStatusChange(record._id, checked)}
+          onChange={(checked) => handleStatusChange(record._id, checked)}
         />
       ),
       width: "15%",
