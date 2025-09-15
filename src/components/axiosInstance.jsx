@@ -22,8 +22,7 @@ const processQueue = (error, token = null) => {
 axiosInstance.interceptors.request.use(
   (config) => {
     const token =
-      localStorage.getItem("token") ||
-      localStorage.getItem("token");
+      localStorage.getItem("token")
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -44,9 +43,9 @@ axiosInstance.interceptors.response.use(
     }
 
     // Special case: Don't retry refresh token requests
-    if (originalRequest.url.includes("refreshtoken")) {
+    if (originalRequest.url.includes("admin-refresh")) {
       localStorage.clear();
-      window.location.href = "/welcome";
+      window.location.href = "/login";
       return Promise.reject(error);
     }
 
@@ -66,22 +65,18 @@ axiosInstance.interceptors.response.use(
     isRefreshing = true;
 
     const refreshToken =
-      localStorage.getItem("hunterRefreshToken") ||
-      localStorage.getItem("ProviderRefreshToken");
-    const userType = localStorage.getItem("hunterToken")
-      ? "hunter"
-      : "provider";
+      localStorage.getItem("refreshToken")
 
     if (!refreshToken) {
       localStorage.clear();
-      window.location.href = "/welcome";
+      window.location.href = "/login";
       return Promise.reject(error);
     }
 
     try {
       const res = await axios.post(
-        "http://34.206.193.218:7878/api/admin/refreshtoken",
-        { refreshToken, userType },
+        "http://34.206.193.218:7878/api/admin/admin-refresh",
+        { refreshToken },
         {
           baseURL: "http://34.206.193.218:7878/api/admin",
           headers: {
@@ -103,7 +98,7 @@ axiosInstance.interceptors.response.use(
     } catch (refreshError) {
       processQueue(refreshError, null);
       localStorage.clear();
-      window.location.href = "/welcome";
+      window.location.href = "/login";
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;

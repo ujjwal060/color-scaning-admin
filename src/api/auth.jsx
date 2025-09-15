@@ -9,8 +9,9 @@ export const loginApi = async (email, password) => {
     });
 
     if (response?.data?.status === 200) {
-      localStorage.setItem("token", response?.data?.token);
+      localStorage.setItem("token", response?.data?.accessToken);
       localStorage.setItem("userId", response?.data?.admin?.id);
+      localStorage.setItem("refreshToken", response?.data?.refreshToken);
       return response?.data;
     }
   } catch (error) {

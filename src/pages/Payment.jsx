@@ -36,28 +36,28 @@ const Payment = () => {
     if (type === "Active") {
       return response.users.map((item) => ({
         key: item._id,
-        name: item.name,
-        email: item.email,
-        planName: item.activeSubscription?.plan?.planName,
-        planPrice: item.activeSubscription?.plan?.planPrice,
+        name: item.name || "no data available",
+        email: item.email || "no data available",
+        planName: item.activeSubscription?.plan?.planName || "no data available",
+        planPrice: item.activeSubscription?.plan?.planPrice || "no data available",
         startDate: new Date(
           item.activeSubscription?.startDate
-        ).toLocaleDateString(),
+        ).toLocaleDateString() || "no data available",
         endDate: new Date(
           item.activeSubscription?.endDate
-        ).toLocaleDateString(),
+        ).toLocaleDateString() || "no data available",
       }));
     } else {
       // History
       return response.users.flatMap((item) =>
         item.subscriptions.map((sub) => ({
           key: sub._id,
-          name: item.name,
-          email: item.email,
-          planName: sub.plan?.planName,
-          planPrice: sub.plan?.planPrice,
-          startDate: new Date(sub.startDate).toLocaleDateString(),
-          endDate: new Date(sub.endDate).toLocaleDateString(),
+          name: item.name || "no data available",
+          email: item.email || "no data available",
+          planName: sub.plan?.planName || "no data available",
+          planPrice: sub.plan?.planPrice || "no data available",
+          startDate: new Date(sub.startDate).toLocaleDateString() || "no data available",
+          endDate: new Date(sub.endDate).toLocaleDateString() || "no data available",
         }))
       );
     }
