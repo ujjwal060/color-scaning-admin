@@ -99,7 +99,7 @@ const Subscription = () => {
     editForm.setFieldsValue({
       planName: plan.planName,
       planPrice: plan.planPrice,
-      validityDuration: plan.validityDuration.toString(),
+      billingCycle: plan.billingCycle.toString(),
       activeStatus: plan.activeStatus,
     });
     setEditOpen(true);
@@ -124,7 +124,7 @@ const Subscription = () => {
       editForm.setFieldsValue({
         planName: editingPlan.planName,
         planPrice: editingPlan.planPrice,
-        validityDuration: editingPlan.validityDuration.toString(),
+        billingCycle: editingPlan.billingCycle.toString(),
         activeStatus: editingPlan.activeStatus,
       });
     }
@@ -134,12 +134,12 @@ const Subscription = () => {
     try {
       // Convert values to numbers before sending to API
       const planName = form.getFieldValue("planName");
-      const validityDuration = Number(form.getFieldValue("validityDuration"));
+      const billingCycle = form.getFieldValue("billingCycle");
       const planPrice = Number(form.getFieldValue("planPrice"));
 
       const response = await createSubscription(
         planName,
-        validityDuration,
+        billingCycle,
         planPrice
       );
       console.log("response", response);
@@ -162,8 +162,8 @@ const Subscription = () => {
       setConfirmLoading(true);
       // Get values from form
       const planName = editForm.getFieldValue("planName");
-      const validityDuration = Number(
-        editForm.getFieldValue("validityDuration")
+      const billingCycle = 
+        editForm.getFieldValue("billingCycle"
       );
       const planPrice = Number(editForm.getFieldValue("planPrice"));
       const activeStatus = editForm.getFieldValue("activeStatus");
@@ -171,7 +171,7 @@ const Subscription = () => {
       const response = await updatePlan(
         editingPlan._id,
         planName,
-        validityDuration,
+        billingCycle,
         planPrice,
         activeStatus
       );
@@ -294,7 +294,7 @@ const Subscription = () => {
       const response = await updatePlan(
         id,
         plan.planName,
-        plan.validityDuration,
+        plan.billingCycle,
         plan.planPrice,
         status // This is the new status from the switch
       );
@@ -328,10 +328,8 @@ const Subscription = () => {
     },
     {
       title: "Validity Duration",
-      dataIndex: "validityDuration",
-      sorter: true,
+      dataIndex: "billingCycle",
       width: "20%",
-      render: (duration) => `${duration} days`,
     },
     {
       title: "Created At",
@@ -440,22 +438,26 @@ const Subscription = () => {
             </Form.Item>
 
             <Form.Item
-              name="validityDuration"
+              name="billingCycle"
               label="Duration"
               rules={[{ required: true, message: "Please select a duration" }]}
             >
               <Select
-                placeholder="Select Day or Year"
+                placeholder="Select Tenure"
                 optionFilterProp="label"
                 onChange={onChange}
                 options={[
                   {
-                    value: "30",
-                    label: "30 days",
+                    value: "Monthly",
+                    label: "Monthly",
+                  },
+                   {
+                    value: "Quarterly",
+                    label: "Quarterly",
                   },
                   {
-                    value: "365",
-                    label: "1 year",
+                    value: "Yearly",
+                    label: "Yearly",
                   },
                 ]}
               />
@@ -502,7 +504,7 @@ const Subscription = () => {
             </Form.Item>
 
             <Form.Item
-              name="validityDuration"
+              name="billingCycle"
               label="Duration"
               rules={[{ required: true, message: "Please select a duration" }]}
             >
