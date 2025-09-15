@@ -28,7 +28,6 @@ const Payment = () => {
     { title: "Plan Price", dataIndex: "planPrice", key: "planPrice" },
     { title: "Start Date", dataIndex: "startDate", key: "startDate" },
     { title: "End Date", dataIndex: "endDate", key: "endDate" },
-   
   ];
 
   const transformData = (response, type) => {
@@ -47,7 +46,6 @@ const Payment = () => {
         endDate: new Date(
           item.activeSubscription?.endDate
         ).toLocaleDateString(),
-      
       }));
     } else {
       // History
@@ -60,20 +58,19 @@ const Payment = () => {
           planPrice: sub.plan?.planPrice,
           startDate: new Date(sub.startDate).toLocaleDateString(),
           endDate: new Date(sub.endDate).toLocaleDateString(),
-        
         }))
       );
     }
   };
 
-  const fetchData = async (type) => {
+  const fetchData = async (type , page = 1) => {
     setLoading(true);
     try {
       let response;
       if (type === "Active") {
-        response = await getActiveSubs();
+        response = await getActiveSubs(page);
       } else {
-        response = await getHistorySubs();
+        response = await getHistorySubs(page);
       }
       setData(transformData(response, type));
       setTableParams({
@@ -126,7 +123,7 @@ const Payment = () => {
         <TableReUsable
           columns={columns}
           data={data}
-          totalCount={data?.length}
+          totalCount={tableParams.pagination.total} // Use the total from API response
           loading={loading}
           onTableChange={handleTableChange}
           tableParams={tableParams}

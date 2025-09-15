@@ -75,15 +75,15 @@ const Users = () => {
     try {
       setLoading(true);
       const response = await getAllUser(
-        params.pagination.current - 1,
+        (params.pagination.current - 1) * params.pagination.pageSize,
         params.pagination.pageSize,
-        params
+        params.filters,
+        params.sortField,
+        params.sortOrder
       );
       if (response?.status === 200) {
-        console.log("response", response.data);
         setUsers(response.data);
         setTotalCount(response.totalCount);
-        notify("success", response.message);
       }
     } catch (error) {
       console.error(error);
@@ -97,9 +97,8 @@ const Users = () => {
     handleUserData(tableParams);
   }, [tableParams]);
 
-  const handleTableChange = (params) => {
-    setTableParams(params);
-    handleUserData(params);
+  const handleTableChange = (newParams) => {
+    setTableParams(newParams);
   };
 
   return (
@@ -123,6 +122,7 @@ const Users = () => {
           totalCount={totalCount}
           loading={loading}
           onTableChange={handleTableChange}
+          tableParams={tableParams}
         />
       </div>
     </>

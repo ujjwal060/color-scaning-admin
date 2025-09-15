@@ -306,7 +306,7 @@ const Dashboard = () => {
           </Row>
         </div>
         <Card className="col-span-2">
-          <h2 style={{ marginBottom: "15px "}}>Recent Subscription</h2>
+          <h2 style={{ marginBottom: "15px "}}>Recent Subscription Purchased</h2>
           <Table columns={columns} dataSource={TableData} />
         </Card>
       </div>

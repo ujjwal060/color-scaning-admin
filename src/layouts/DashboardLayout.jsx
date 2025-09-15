@@ -117,11 +117,16 @@ const DashboardLayout = () => {
           scrollbarGutter: "stable",
           // background: "#5757F7",
           background:
-            "linear-gradient(137deg, rgba(87, 87, 247, 1) 0%, rgba(73, 207, 174, 1) 49%, rgba(220, 163, 255, 1) 100%)",
+            "linear-gradient(137deg,rgba(73, 207, 174, 1) 0%, rgba(220, 163, 255, 1) 57%)",
         }}
       >
         <div className="demo-logo-vertical w-full mt-3">
-          <img src={logo1} alt="logo" className="w-full" style={{maxHeight: "120px" , objectFit:"contain"}} />
+          <img
+            src={logo1}
+            alt="logo"
+            className="w-full"
+            style={{ maxHeight: "120px", objectFit: "contain" }}
+          />
         </div>
         <Menu
           // theme="dark"
@@ -132,7 +137,7 @@ const DashboardLayout = () => {
             icon: item.icon,
             label: item.label,
           }))}
-          style={{ background: "inherit" , marginTop: "20px"}}
+          style={{ background: "inherit", marginTop: "20px" }}
           onClick={handleMenuClick}
         />
       </Sider>

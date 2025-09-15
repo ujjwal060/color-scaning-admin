@@ -3,14 +3,22 @@ import { notify } from "../components/notification";
 
 const token = localStorage.getItem("token");
 
-export const getAllUser = async (offset = 0, limit = 10, filter) => {
+export const getAllUser = async (
+  offset = 0,
+  limit = 10,
+  filters,
+  sortField,
+  sortOrder
+) => {
   try {
     const response = await axiosInstance.post(
       "admin/users/getUsers",
       {
         offset: offset,
         limit: limit,
-        filter: filter,
+        filters: filters,
+        sortField: sortField,
+        sortOrder: sortOrder,
       },
       {
         headers: {
@@ -19,7 +27,6 @@ export const getAllUser = async (offset = 0, limit = 10, filter) => {
       }
     );
     if (response?.data?.status === 200) {
-      console.log("response api", response);
       return response?.data;
     }
   } catch (error) {
@@ -137,26 +144,32 @@ export const updatePlan = async (
   }
 };
 
-export const getHistorySubs = async () => {
+export const getHistorySubs = async (page = 1) => {
   try {
-    const response = await axiosInstance.get("subscription/user-plan-history", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axiosInstance.get(
+      `subscription/user-plan-history?page=${page}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response?.data?.users;
   } catch (error) {
     notify("error", error?.response?.data?.message);
   }
 };
 
-export const getActiveSubs = async () => {
+export const getActiveSubs = async (page = 1) => {
   try {
-    const response = await axiosInstance.get("subscription/user-active-plan", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axiosInstance.get(
+      `subscription/user-active-plan?page=${page}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response?.data;
   } catch (error) {
     notify("error", error?.response?.data?.message);
