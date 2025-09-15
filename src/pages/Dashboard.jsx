@@ -316,7 +316,7 @@ const Dashboard = () => {
         <div
           className="col-span-2"
           style={{
-            padding: "24px",
+            padding: "24px 12px 24px 0",
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
           }}
@@ -383,16 +383,32 @@ const Dashboard = () => {
             </Col>
           </Row>
         </div>
-        <Card className="col-span-2">
-          <h2 style={{ marginBottom: "15px" }}>
-            Recent Subscription Purchased
-          </h2>
-          <Table
-            columns={columns}
-            dataSource={getTableData()}
-            pagination={false}
-          />
-        </Card>
+        <div
+          className="col-span-2"
+          style={{
+            padding: "24px 24px 24px 0",
+            background: colorBgContainer,
+            borderRadius: borderRadiusLG,
+          }}
+        >
+          <div
+            style={{
+              marginBottom: "24px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <h2 style={{ margin: 0 }}>Recent Subscription Purchased</h2>
+          </div>
+          <Card>
+            <Table
+              columns={columns}
+              dataSource={getTableData()}
+              pagination={false}
+            />
+          </Card>
+        </div>
       </div>
     </>
   );
