@@ -69,16 +69,26 @@ export const createSubscription = async (
   }
 };
 
-export const getSubscription = async () => {
+export const getSubscription = async (page, pageSize, sortBy, sortOrder) => {
   try {
-    const response = await axiosInstance.get("plan/all", {
+    let url = `plan/all?page=${page}&limit=${pageSize}`;
+
+    // Add sorting parameters if provided
+    if (sortBy && sortOrder) {
+      // Convert Ant Design sortOrder values to API expected values
+      const apiSortOrder = sortOrder === "ascend" ? "asc" : "desc";
+      url += `&sortBy=${sortBy}&sortOrder=${apiSortOrder}`;
+    }
+
+    const response = await axiosInstance.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
+
     console.log("response api get", response);
     if (response?.data?.success === true) {
-      return response?.data?.plans;
+      return response?.data;
     }
   } catch (error) {
     notify("error", error?.response?.data?.message);
@@ -101,11 +111,17 @@ export const deletePlan = async (id) => {
   }
 };
 
-export const updatePlan = async (id, planName, validityDuration, planPrice , activeStatus) => {
+export const updatePlan = async (
+  id,
+  planName,
+  validityDuration,
+  planPrice,
+  activeStatus
+) => {
   try {
     const response = await axiosInstance.put(
       `plan/${id}`,
-      { planName, validityDuration, planPrice , activeStatus},
+      { planName, validityDuration, planPrice, activeStatus },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -121,28 +137,28 @@ export const updatePlan = async (id, planName, validityDuration, planPrice , act
   }
 };
 
-export const getHistorySubs = async() => {
+export const getHistorySubs = async () => {
   try {
     const response = await axiosInstance.get("subscription/user-plan-history", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response?.data?.users
+    return response?.data?.users;
   } catch (error) {
     notify("error", error?.response?.data?.message);
   }
-}
+};
 
-export const getActiveSubs = async() => {
+export const getActiveSubs = async () => {
   try {
     const response = await axiosInstance.get("subscription/user-active-plan", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response?.data
+    return response?.data;
   } catch (error) {
     notify("error", error?.response?.data?.message);
   }
-}
+};

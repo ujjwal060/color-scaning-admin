@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Table } from "antd";
 
 const TableReUsable = ({
@@ -13,24 +13,25 @@ const TableReUsable = ({
     const newParams = {
       pagination: {
         ...pagination,
-        pageSize: 10,
       },
       filters,
-      sortOrder: Array.isArray(sorter) ? undefined : sorter.order,
-      sortField: Array.isArray(sorter) ? undefined : sorter.field,
+      sortOrder: sorter.order, // This will be "ascend" or "descend"
+      sortField: sorter.field,
     };
+
+    console.log("Table change params:", newParams);
     onTableChange && onTableChange(newParams);
   };
-
 
   return (
     <Table
       columns={columns}
-      className="table-custom 00000"
+      className="table-custom"
       rowKey={(record) => record._id}
       dataSource={data}
       pagination={{
         ...tableParams?.pagination,
+        total: totalCount,
         showSizeChanger: false,
         pageSizeOptions: [],
         size: "default",

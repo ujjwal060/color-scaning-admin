@@ -35,7 +35,6 @@ const Users = () => {
     {
       title: "Name",
       dataIndex: "name",
-      sorter: true,
       width: "20%",
     },
     {

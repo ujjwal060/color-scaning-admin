@@ -25,9 +25,10 @@ const Payment = () => {
     { title: "Name", dataIndex: "name", key: "name" },
     { title: "Email", dataIndex: "email", key: "email" },
     { title: "Plan", dataIndex: "planName", key: "planName" },
+    { title: "Plan Price", dataIndex: "planPrice", key: "planPrice" },
     { title: "Start Date", dataIndex: "startDate", key: "startDate" },
     { title: "End Date", dataIndex: "endDate", key: "endDate" },
-    { title: "Status", dataIndex: "status", key: "status" },
+   
   ];
 
   const transformData = (response, type) => {
@@ -39,13 +40,14 @@ const Payment = () => {
         name: item.name,
         email: item.email,
         planName: item.activeSubscription?.plan?.planName,
+        planPrice: item.activeSubscription?.plan?.planPrice,
         startDate: new Date(
           item.activeSubscription?.startDate
         ).toLocaleDateString(),
         endDate: new Date(
           item.activeSubscription?.endDate
         ).toLocaleDateString(),
-        status: item.activeSubscription?.isActive ? "Active" : "Expired",
+      
       }));
     } else {
       // History
@@ -55,9 +57,10 @@ const Payment = () => {
           name: item.name,
           email: item.email,
           planName: sub.plan?.planName,
+          planPrice: sub.plan?.planPrice,
           startDate: new Date(sub.startDate).toLocaleDateString(),
           endDate: new Date(sub.endDate).toLocaleDateString(),
-          status: sub.isActive ? "Active" : "Expired",
+        
         }))
       );
     }

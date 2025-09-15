@@ -48,32 +48,42 @@ const Subscription = () => {
     try {
       setLoading(true);
       const response = await getSubscription(
-        params.pagination.current, // Remove the -1 here
+        params.pagination.current,
         params.pagination.pageSize,
-        params
+        params.sortField,
+        params.sortOrder
       );
-      console.log("response", response);
+
+      console.log("Fetching data with params:", params);
       if (response) {
-        setData(response.users || response.data || response); // Adjust based on actual response structure
+        setData(response.plans || []);
         setTableParams({
+          ...params,
           pagination: {
             current: response.page,
-            pageSize: 10,
-            total: response.totalUsers || response.total || 0, // Adjust based on actual response
+            pageSize: params.pagination.pageSize,
+            total: response.totalPlans || 0,
           },
         });
         notify("success", "Plans Fetched Successfully");
       }
     } catch (error) {
       console.error(error);
-      notify("error", "Failed to fetch users");
+      notify("error", "Failed to fetch plans");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    handleSubscriptionData(tableParams);
+    handleSubscriptionData({
+      pagination: {
+        current: 1,
+        pageSize: 10,
+      },
+      sortField: null, // Initial sort field
+      sortOrder: null, // Initial sort order
+    });
   }, []);
 
   const onChange = (value) => {
@@ -208,7 +218,31 @@ const Subscription = () => {
       console.log("response delete", response);
       if (response?.success === true) {
         notify("success", "Plan deleted successfully!");
-        handleSubscriptionData(tableParams);
+
+        // Check if we're on a page that might now be empty
+        const currentPage = tableParams.pagination.current;
+        const totalItemsAfterDelete = tableParams.pagination.total - 1;
+        const itemsPerPage = tableParams.pagination.pageSize;
+
+        // Calculate the last page after deletion
+        const lastPage = Math.ceil(totalItemsAfterDelete / itemsPerPage);
+
+        // If current page is greater than last page, go to last page
+        if (currentPage > lastPage) {
+          const newTableParams = {
+            ...tableParams,
+            pagination: {
+              ...tableParams.pagination,
+              current: lastPage,
+              total: totalItemsAfterDelete,
+            },
+          };
+          setTableParams(newTableParams);
+          handleSubscriptionData(newTableParams);
+        } else {
+          // Otherwise, just refresh with current page
+          handleSubscriptionData(tableParams);
+        }
       }
     } catch (error) {
       notify("error", error);
@@ -216,6 +250,7 @@ const Subscription = () => {
   };
 
   const handleTableChange = (newTableParams) => {
+    console.log("New table params:", newTableParams);
     setTableParams(newTableParams);
     handleSubscriptionData(newTableParams);
   };
@@ -283,7 +318,6 @@ const Subscription = () => {
     {
       title: "Plan Name",
       dataIndex: "planName",
-      sorter: true,
       width: "20%",
     },
     {
@@ -361,7 +395,7 @@ const Subscription = () => {
         <TableReUsable
           columns={columns}
           data={data}
-          totalCount={tableParams.pagination.total} // Add this prop
+          totalCount={tableParams.pagination.total} // This should now be correct
           loading={loading}
           onTableChange={handleTableChange}
           tableParams={tableParams} // Make sure this is passed

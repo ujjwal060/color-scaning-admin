@@ -207,7 +207,7 @@ const Dashboard = () => {
       <div className="grid grid-cols-4 gap-3">
         <Card>
           <Statistic
-            title="Total Active User"
+            title="Total Users"
             value={maxDaily}
             precision={0}
             valueStyle={{ color: "#3f8600" }}
@@ -223,7 +223,7 @@ const Dashboard = () => {
         </Card>
         <Card>
           <Statistic
-            title="Total Active User"
+            title="Total Subscription"
             value={maxDaily}
             precision={0}
             valueStyle={{ color: "#3f8600" }}
@@ -306,7 +306,7 @@ const Dashboard = () => {
           </Row>
         </div>
         <Card className="col-span-2">
-          <h2 style={{ marginBottom: "15px "}}>Recent Transactions</h2>
+          <h2 style={{ marginBottom: "15px "}}>Recent Subscription</h2>
           <Table columns={columns} dataSource={TableData} />
         </Card>
       </div>
