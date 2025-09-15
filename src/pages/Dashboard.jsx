@@ -330,9 +330,6 @@ const Dashboard = () => {
             }}
           >
             <h2 style={{ margin: 0 }}>Revenue Dashboard</h2>
-            <div>
-              <RangePicker />
-            </div>
           </div>
 
           {/* <Row gutter={16} style={{ marginBottom: "24px" }}>
