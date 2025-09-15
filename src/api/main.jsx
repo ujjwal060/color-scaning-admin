@@ -19,6 +19,7 @@ export const getAllUser = async (offset = 0, limit = 10, filter) => {
       }
     );
     if (response?.data?.status === 200) {
+      console.log("response api", response);
       return response?.data;
     }
   } catch (error) {
@@ -119,3 +120,29 @@ export const updatePlan = async (id, planName, validityDuration, planPrice , act
     notify("error", error?.response?.data?.message);
   }
 };
+
+export const getHistorySubs = async() => {
+  try {
+    const response = await axiosInstance.get("subscription/user-plan-history", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data?.users
+  } catch (error) {
+    notify("error", error?.response?.data?.message);
+  }
+}
+
+export const getActiveSubs = async() => {
+  try {
+    const response = await axiosInstance.get("subscription/user-active-plan", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data
+  } catch (error) {
+    notify("error", error?.response?.data?.message);
+  }
+}

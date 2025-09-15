@@ -34,12 +34,12 @@ const Subscription = () => {
   const [editingPlan, setEditingPlan] = useState(null);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [totalCount, setTotalCount] = useState(0);
 
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
       pageSize: 10,
+      total: 0,
     },
   });
 
@@ -48,14 +48,20 @@ const Subscription = () => {
     try {
       setLoading(true);
       const response = await getSubscription(
-        params.pagination.current - 1,
+        params.pagination.current, // Remove the -1 here
         params.pagination.pageSize,
         params
       );
       console.log("response", response);
       if (response) {
-        setData(response);
-        setTotalCount(response.length);
+        setData(response.users || response.data || response); // Adjust based on actual response structure
+        setTableParams({
+          pagination: {
+            current: response.page,
+            pageSize: 10,
+            total: response.totalUsers || response.total || 0, // Adjust based on actual response
+          },
+        });
         notify("success", "Plans Fetched Successfully");
       }
     } catch (error) {
@@ -68,7 +74,7 @@ const Subscription = () => {
 
   useEffect(() => {
     handleSubscriptionData(tableParams);
-  }, [tableParams]);
+  }, []);
 
   const onChange = (value) => {
     console.log(`selected ${value}`);
@@ -209,9 +215,9 @@ const Subscription = () => {
     }
   };
 
-  const handleTableChange = (params) => {
-    setTableParams(params);
-    handleSubscriptionData(params);
+  const handleTableChange = (newTableParams) => {
+    setTableParams(newTableParams);
+    handleSubscriptionData(newTableParams);
   };
 
   // Custom footer with three buttons for create modal
@@ -255,7 +261,7 @@ const Subscription = () => {
         plan.planName,
         plan.validityDuration,
         plan.planPrice,
-         status // This is the new status from the switch
+        status // This is the new status from the switch
       );
 
       if (response?.success === true) {
@@ -303,7 +309,7 @@ const Subscription = () => {
     {
       title: "Active Status",
       dataIndex: "activeStatus",
-      render: (status , record) => (
+      render: (status, record) => (
         <Switch
           checked={status}
           onChange={(checked) => handleStatusChange(record._id, checked)}
@@ -355,9 +361,10 @@ const Subscription = () => {
         <TableReUsable
           columns={columns}
           data={data}
-          totalCount={totalCount}
+          totalCount={tableParams.pagination.total} // Add this prop
           loading={loading}
           onTableChange={handleTableChange}
+          tableParams={tableParams} // Make sure this is passed
         />
 
         {/* Create Plan Modal */}

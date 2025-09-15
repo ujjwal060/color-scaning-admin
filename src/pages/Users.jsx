@@ -81,6 +81,7 @@ const Users = () => {
         params
       );
       if (response?.status === 200) {
+        console.log("response", response.data);
         setUsers(response.data);
         setTotalCount(response.totalCount);
         notify("success", response.message);
