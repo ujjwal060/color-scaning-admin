@@ -27,7 +27,7 @@ const TableReUsable = ({
     <Table
       columns={columns}
       className="table-custom"
-      rowKey={(record) => record._id}
+      rowKey={(record) => record.key}
       dataSource={data}
       pagination={{
         ...tableParams?.pagination,

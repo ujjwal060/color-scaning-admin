@@ -3,22 +3,28 @@ import AuthLayout from "../components/AuthLayout";
 import { loginApi } from "../api/auth";
 import { notify } from "../components/notification";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function Login() {
   // const [notify, setNotify] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const onLogin = async (values) => {
     if (!loginApi(values.email, values.password)) return;
 
     try {
+      setLoading(true);
       const response = await loginApi(values.email, values.password);
+
       if (response?.status !== 200) return;
       if (response?.status === 200) {
+        setLoading(false);
         notify("success", "Login successful!");
         navigate("/");
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -37,7 +43,7 @@ export default function Login() {
           <Input.Password placeholder="Enter your password" />
         </Form.Item>
 
-        <Button type="primary" htmlType="submit" block>
+        <Button type="primary" htmlType="submit" block loading={loading}>
           Login
         </Button>
 
