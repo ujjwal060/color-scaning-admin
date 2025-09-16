@@ -235,10 +235,10 @@ const Dashboard = () => {
 
     return dashboardData.data.lastFiveSubs.map((sub, index) => ({
       key: index,
-      name: sub.user.name,
-      email: sub.user.email,
-      plan: sub.plan.planName,
-      status: sub.isActive,
+      name: sub?.user?.name,
+      email: sub?.user?.email,
+      plan: sub?.plan?.planName,
+      status: sub?.isActive,
     }));
   };
 
@@ -290,7 +290,7 @@ const Dashboard = () => {
         <Card>
           <Statistic
             title="Users with Active Subs"
-            value={dashboardData?.data.usersWithActiveSubs || 0}
+            value={dashboardData?.data?.usersWithActiveSubs || 0}
             precision={0}
             valueStyle={{ color: "#3f8600" }}
           />
@@ -298,7 +298,7 @@ const Dashboard = () => {
         <Card>
           <Statistic
             title="Total Revenue"
-            value={dashboardData?.data.totalRevenue || 0}
+            value={dashboardData?.data?.totalRevenue || 0}
             precision={2}
             valueStyle={{ color: "#3f8600" }}
             prefix="$"
@@ -307,7 +307,7 @@ const Dashboard = () => {
         <Card>
           <Statistic
             title="Today's Revenue"
-            value={dashboardData?.data.todaysRevenue || 0}
+            value={dashboardData?.data?.todaysRevenue || 0}
             precision={2}
             valueStyle={{ color: "#3f8600" }}
             prefix="$"
@@ -373,7 +373,7 @@ const Dashboard = () => {
               <Card>
                 <div style={{ height: "400px" }}>
                   {dashboardData &&
-                  dashboardData.data.planWiseData.length > 1 ? (
+                  dashboardData?.data?.planWiseData?.length > 1 ? (
                     <Bar options={chartOptions} data={getChartData()} />
                   ) : (
                     <Line options={chartOptions} data={getChartData()} />
