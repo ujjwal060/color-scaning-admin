@@ -373,11 +373,8 @@ const Dashboard = () => {
               <Card>
                 <div style={{ height: "400px" }}>
                   {dashboardData &&
-                  dashboardData?.data?.planWiseData?.length > 1 ? (
                     <Bar options={chartOptions} data={getChartData()} />
-                  ) : (
-                    <Line options={chartOptions} data={getChartData()} />
-                  )}
+                  }
                 </div>
               </Card>
             </Col>
