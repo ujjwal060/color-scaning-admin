@@ -34,36 +34,50 @@ const Payment = () => {
     if (!response) return [];
 
     if (type === "Active") {
-      return response.users.map((item) => ({
+      return response?.data?.users.map((item) => ({
         key: item._id,
         name: item.name || "no data available",
         email: item.email || "no data available",
-        planName: item.activeSubscription?.plan?.planName || "no data available",
-        planPrice: item.activeSubscription?.plan?.planPrice || "no data available",
-        startDate: new Date(
-          item.activeSubscription?.startDate
-        ).toLocaleDateString() || "no data available",
-        endDate: new Date(
-          item.activeSubscription?.endDate
-        ).toLocaleDateString() || "no data available",
+        planName:
+          item.activeSubscription?.plan?.planName || "no data available",
+        planPrice:
+          item.activeSubscription?.plan?.planPrice || "no data available",
+        startDate:
+          new Date(item.activeSubscription?.startDate).toLocaleDateString() ||
+          "no data available",
+        endDate:
+          new Date(item.activeSubscription?.endDate).toLocaleDateString() ||
+          "no data available",
       }));
     } else {
-      // History
-      return response.users.flatMap((item) =>
-        item.subscriptions.map((sub) => ({
-          key: sub._id,
-          name: item.name || "no data available",
-          email: item.email || "no data available",
-          planName: sub.plan?.planName || "no data available",
-          planPrice: sub.plan?.planPrice || "no data available",
-          startDate: new Date(sub.startDate).toLocaleDateString() || "no data available",
-          endDate: new Date(sub.endDate).toLocaleDateString() || "no data available",
-        }))
-      );
+      // History - Show users with their latest expired subscription or basic info
+      return response?.data?.users.map((user) => {
+        // Get the latest expired subscription (assuming subscriptions are sorted by date)
+      
+        const latestSubscription =
+          user.subscriptions?.length > 0
+            ? user.subscriptions[user.subscriptions.length - 1]
+            : null;
+
+        return {
+          key: user._id,
+          name: user.name || "no data available",
+          email: user.email || "no data available",
+          planName:
+            latestSubscription?.plan?.planName || "No subscription history",
+          planPrice: latestSubscription?.plan?.planPrice || "N/A",
+          startDate: latestSubscription?.startDate
+            ? new Date(latestSubscription.startDate).toLocaleDateString()
+            : "N/A",
+          endDate: latestSubscription?.endDate
+            ? new Date(latestSubscription.endDate).toLocaleDateString()
+            : "N/A",
+        };
+      });
     }
   };
 
-  const fetchData = async (type , page = 1) => {
+  const fetchData = async (type, page = 1) => {
     setLoading(true);
     try {
       let response;
@@ -72,12 +86,13 @@ const Payment = () => {
       } else {
         response = await getHistorySubs(page);
       }
+      
       setData(transformData(response, type));
       setTableParams({
         pagination: {
-          current: response.page,
+          current: response?.data?.page,
           pageSize: 10,
-          total: response.totalUsers,
+          total: response?.data?.totalUsers,
         },
       });
       notify("success", "Plans Fetched Successfully");

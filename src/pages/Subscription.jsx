@@ -53,10 +53,9 @@ const Subscription = () => {
         params.sortField,
         params.sortOrder
       );
-
-      console.log("Fetching data with params:", params);
-      if (response) {
-        setData(response.plans || []);
+      if (response?.success === true) {
+       
+        setData(response?.data?.plans || []);
         setTableParams({
           ...params,
           pagination: {
@@ -142,7 +141,7 @@ const Subscription = () => {
         billingCycle,
         planPrice
       );
-      console.log("response", response);
+      
       if (response?.success === true) {
         setOpen(false);
         form.resetFields();
@@ -176,7 +175,6 @@ const Subscription = () => {
         activeStatus
       );
 
-      console.log("response update", response);
       if (response?.success === true) {
         setEditOpen(false);
         setEditingPlan(null);
@@ -215,7 +213,6 @@ const Subscription = () => {
   const handleDelete = async (id) => {
     try {
       const response = await deletePlan(id);
-      console.log("response delete", response);
       if (response?.success === true) {
         notify("success", "Plan deleted successfully!");
 
@@ -250,7 +247,6 @@ const Subscription = () => {
   };
 
   const handleTableChange = (newTableParams) => {
-    console.log("New table params:", newTableParams);
     setTableParams(newTableParams);
     handleSubscriptionData(newTableParams);
   };

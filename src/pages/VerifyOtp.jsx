@@ -10,7 +10,6 @@ export default function VerifyOtp() {
   const onFinish = async (values) => {
     try {
       const response = await verifyOtpApi(email, values.otp);
-      console.log("response of otp", response);
       if (response?.status === 200) {
         notify("success", "OTP verified successfully!");
         navigate("/reset-password?token=" + response?.resetToken);

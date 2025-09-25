@@ -69,7 +69,7 @@ export const updatePlan = async (
         },
       }
     );
-    console.log("response api get plan", response);
+   
     if (response?.data?.success === true) {
       return response?.data;
     }
@@ -93,7 +93,7 @@ export const createSubscription = async (
         },
       }
     );
-    console.log("response api", response);
+
     if (response?.data?.success === true) {
       return response?.data;
     }
@@ -119,7 +119,7 @@ export const getSubscription = async (page, pageSize, sortBy, sortOrder) => {
       },
     });
 
-    console.log("response api get", response);
+
     if (response?.data?.success === true) {
       return response?.data;
     }
@@ -135,7 +135,7 @@ export const deletePlan = async (id) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log("response api get", response);
+   
     if (response?.data?.success === true) {
       return response?.data;
     }
@@ -154,7 +154,7 @@ export const getHistorySubs = async (page = 1) => {
         },
       }
     );
-    return response?.data?.users;
+    return response?.data;
   } catch (error) {
     notify("error", error?.response?.data?.message);
   }

@@ -41,7 +41,7 @@ const DashboardLayout = () => {
   };
 
   const handleLogoutCancel = () => {
-    console.log("Cancelled logout");
+
     setIsLogoutModalOpen(false);
   };
 
